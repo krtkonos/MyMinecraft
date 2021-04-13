@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 9119567620335373318}
   - component: {fileID: 2115092466134729804}
   m_Layer: 8
-  m_Name: End
+  m_Name: bedrockBlock
   m_TagString: block
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,8 +107,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1fffc4c9e96eaa4983703e9169c49f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 20
+  currentHealth: 1000
+  maxHealth: 1000
   sound: {fileID: 5500382466447354872, guid: ac29072dad4f00c46b2999e722c97491, type: 3}
+  id: 0
+  blockPos: {x: 0, y: 0, z: 0}
 --- !u!114 &2115092466134729804
 MonoBehaviour:
   m_ObjectHideFlags: 0

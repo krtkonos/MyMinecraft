@@ -28,6 +28,7 @@ public class MyController : MonoBehaviour
     Inventory inv;
     public Transform transPlaceBlock;
     public List<GameObject> newBlocks;
+    
 
     void Start()
     {
@@ -52,6 +53,11 @@ public class MyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(transform.position.y < -10)
+        {
+            transform.position = new Vector3(0, 50, 0);
+        }
+        
         pos = transform.position;
         /*if (Input.GetKeyDown("p"))
         {
@@ -211,32 +217,47 @@ public class MyController : MonoBehaviour
         Ray rayUp = new Ray(gameObject.transform.position, gameObject.transform.up);
         Ray rayDown = new Ray(gameObject.transform.position, -gameObject.transform.up);
         RaycastHit hit;
-        if (Physics.Raycast(rayUp, out hit, 30, mask) || Physics.Raycast(rayDown, out hit, 30, mask))
+        if (Physics.Raycast(rayUp, out hit, 50, mask) || Physics.Raycast(rayDown, out hit, 50, mask))
         {
 
         }
         else
         {
-            GameObject coll = Instantiate(collid, new Vector3(transform.position.x, transform.position.y - 10,
-                    transform.position.z), Quaternion.identity);
-            coll.transform.SetParent(GameObject.FindWithTag("Enviro").transform);
-            wc.GenerateNewTerrain(ax, az);
+            if (transform.position.y > -10)
+            {
+                GameObject coll = Instantiate(collid, new Vector3(transform.position.x, transform.position.y - 10,
+                        transform.position.z), Quaternion.identity);
+                coll.transform.SetParent(GameObject.FindWithTag("Enviro").transform);
+                wc.GenerateNewTerrain(ax, az);
+
+            }
         }
     }
-    void Save()
+    public void Save()
     {
         JSON myObject = new JSON();
         // myObject.level = score;
-        myObject.JSONpos = pos;
+        myObject.JSONpos = transform.position;
         //myObject.newBlock = newBlocks;
 
 
         string json = JsonUtility.ToJson(myObject);
 
-        File.WriteAllText(Application.dataPath + WorldGenerator.saveFile, json);
+        File.WriteAllText(Application.dataPath + SaveSystem.PLAYER_SUB, json);
         Debug.Log(json + "saved");
     }
-    
+    public void Load()
+    {
+        JSON myObject = new JSON();
+        string json = File.ReadAllText(Application.dataPath + SaveSystem.PLAYER_SUB);
+        JSON loaded = JsonUtility.FromJson<JSON>(json);
+        transform.position = loaded.JSONpos;
+
+        //score = loaded.level;
+        Debug.Log("Loaded");
+
+    }
+
     private void OnApplicationQuit()
     {
         //Save();
@@ -246,7 +267,7 @@ public class MyController : MonoBehaviour
     public class JSON
     {
         public Vector3 JSONpos;
-        public List<GameObject> newBlock;
+        //public List<GameObject> newBlock;
     }
     
 

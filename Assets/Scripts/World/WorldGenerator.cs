@@ -34,19 +34,17 @@ public class WorldGenerator : MonoBehaviour
 
     private void Start()
     {
-        JSON myObject = new JSON();
-       /* if (File.Exists(Application.dataPath + saveFile))
-        {            
-            Load();
-        }
-        else
-        {*/
-            //seed = Random.Range(100000, 999999);
             seed = 100076;
             Debug.Log(seed);
-        //Instantiate(player, new Vector3(15, 50, 15), Quaternion.identity);
-        //GenerateTerrain();      
-        //}
+        //JSON myObject = new JSON();
+       if (File.Exists(Application.dataPath + saveFile))
+        {            
+            //Load();
+        }
+        else
+        {
+            return;     
+        }
     }
     private void Update()
     {        
@@ -60,9 +58,9 @@ public class WorldGenerator : MonoBehaviour
     {
         Debug.Log("Terraingenerated");
         //JSON save = new JSON();
-        for (float x = 0; x < sizeX; x++)
+        for (int x = 0; x < sizeX; x++)
         {
-            for(float z = 0; z < sizeZ; z++)
+            for(int z = 0; z < sizeZ; z++)
             {
                 maxY= (int)(Mathf.PerlinNoise((x / 2 + seed) / terDetail, (z / 2 + seed) / terDetail) * terHeight);
                 maxY += groundHeight;
@@ -123,6 +121,7 @@ public class WorldGenerator : MonoBehaviour
                     if (x == (int)(sizeX / 2) && z == (int)(sizeZ / 2))
                     {
                         Instantiate(player, new Vector3(x, maxY + 3, z), Quaternion.identity);
+                    
                     }
                 //}    
             }
@@ -198,50 +197,7 @@ public class WorldGenerator : MonoBehaviour
         }
         
     }
-    void Blocks()
-    {
-        GameObject grass = Instantiate(blocks[0], new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
-        GameObject stone = Instantiate(blocks[1], new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
-        GameObject dirt = Instantiate(blocks[2], new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
-        GameObject bedrock = Instantiate(blocks[3], new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
-
-    }
-    void Load()
-    {
-        JSON myObject = new JSON();
-        string json = File.ReadAllText(Application.dataPath + saveFile);
-        JSON loaded = JsonUtility.FromJson<JSON>(json);
-        seed = loaded.jsonSeed;        
-        plyPos = loaded.JSONpos;
-        //Instantiate(player, plyPos, Quaternion.identity);
-        Instantiate(player, plyPos, Quaternion.identity);
-
-
-        //score = loaded.level;
-        Debug.Log("Loaded");
-
-    }
-    void Save()
-    {
-        JSON myObject = new JSON();
-        //myObject.JSONpos = MyController.pos;
-        myObject.jsonSeed = seed;
-        //myObject.loadedWorld = world;
-        Debug.Log("Json seed: " + myObject.jsonSeed);
-
-        string json = JsonUtility.ToJson(myObject);
-
-        File.WriteAllText(Application.dataPath + saveFile, json);
-        Debug.Log(json + "saved");
-
-    }
     
-
-    [System.Serializable]
-    public class JSON
-    {
-        public int jsonSeed;
-        public Vector3 JSONpos;        
-    }
+    
 
 }

@@ -22,12 +22,12 @@ public class BlockData
 
     }
     public BlockData(MyController player)
-    {        
-        Vector3 playPos = player.transform.position;
-        playerPosition = new float[]
-        {
-            playPos.x, playPos.y, playPos.z
-        };
+    {
+        playerPosition = new float[3];
+        playerPosition[0] = player.transform.position.x;
+        playerPosition[1] = player.transform.position.y;
+        playerPosition[2] = player.transform.position.z;
+        
     }
     public BlockData(WorldColliderSCript collid)
     {        

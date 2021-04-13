@@ -32,7 +32,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6955505215366893941}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 16, y: 30, z: 16}
   m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_Children:
   - {fileID: 8384744324089855323}
@@ -157,10 +157,9 @@ MonoBehaviour:
   canInteract: 0
   world: {fileID: 1257052031909558877, guid: 4fe33bfdef1d7224496191ae4a141efc, type: 3}
   collid: {fileID: 205184869307921764, guid: 95d8d50cf46ebd646a4c6a610d34c9c4, type: 3}
-  ax: 0
-  az: 0
   wc: {fileID: 1257052031909558876, guid: 4fe33bfdef1d7224496191ae4a141efc, type: 3}
   transPlaceBlock: {fileID: 8384744324089855323}
+  newBlocks: []
 --- !u!114 &7454193114707191586
 MonoBehaviour:
   m_ObjectHideFlags: 0

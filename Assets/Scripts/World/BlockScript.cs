@@ -6,8 +6,8 @@ using System;
 
 public class BlockScript : MonoBehaviour
 {
-    public int currentHealth = 20;
-    public int maxHealth = 20;
+    public int currentHealth;
+    public int maxHealth;
     public AudioSource sound;
     Inventory inv;
     public int id;
@@ -16,7 +16,25 @@ public class BlockScript : MonoBehaviour
 
     void Awake()
     {
-        SaveSystem.blocks.Add(this);
+        if (maxHealth == 10)
+        {
+            SaveSystem.blocks.Add(this);
+        }
+        else if (maxHealth == 20)
+        {
+            SaveSystem.dirtB.Add(this);
+
+        }
+        else if (maxHealth == 30)
+        {
+            SaveSystem.stoneB.Add(this);
+
+        }
+        else if (maxHealth == 1000)
+        {
+            SaveSystem.brB.Add(this);
+        }
+        else { }                
     }
     // Start is called before the first frame update
     void Start()
@@ -54,8 +72,26 @@ public class BlockScript : MonoBehaviour
     
     private void OnDestroy()
     {
-        SaveSystem.blocks.Remove(this);
-        //Debug.Log("Destroy saved");
+        //SaveSystem.blocks.Remove(this);
+        if (maxHealth == 10)
+        {
+            SaveSystem.blocks.Remove(this);
+        }
+        else if (maxHealth == 20)
+        {
+            SaveSystem.dirtB.Remove(this);
+
+        }
+        else if (maxHealth == 30)
+        {
+            SaveSystem.stoneB.Remove(this);
+
+        }
+        else if (maxHealth == 1000)
+        {
+            SaveSystem.brB.Remove(this);
+        }
+        else { }
     }
     
     

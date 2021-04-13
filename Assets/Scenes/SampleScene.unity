@@ -242,12 +242,17 @@ MonoBehaviour:
   colliderPrefab: {fileID: -1158213597020086888, guid: 95d8d50cf46ebd646a4c6a610d34c9c4,
     type: 3}
   wg: {fileID: 1644291835}
-  BLOCK_SUB: /files1.txt
-  BLOCK_COUNT_SUB: /files2.txt
-  PLAYER_SUB: /files3.txt
-  PLAYER_COUNT_SUB: /files4.txt
-  COLLIDER_SUB: /files5.txt
-  COLLIDER_COUNT_SUB: /files6.txt
+  mc: {fileID: 8142780073566172238, guid: 61e9f7c054f013e4486ada540dc00908, type: 3}
+  BLOCK_SUB: /mine1.txt
+  BLOCK_COUNT_SUB: /mine2.txt
+  DIRT_SUB: /mine3.txt
+  DIRT_COUNT_SUB: /mine4.txt
+  STONE_SUB: /mine5.txt
+  STONE_COUNT_SUB: /mine6.txt
+  BRB_SUB: /mine7.txt
+  BRB_COUNT_SUB: /mine8.txt
+  COLLIDER_SUB: /mine9.txt
+  COLLIDER_COUNT_SUB: /mine10.txt
 --- !u!1 &452087199
 GameObject:
   m_ObjectHideFlags: 0
