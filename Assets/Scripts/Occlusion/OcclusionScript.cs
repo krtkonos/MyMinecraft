@@ -18,7 +18,6 @@ public class OcclusionScript : MonoBehaviour
     void Start()
     {
         cam = gameObject.GetComponentInChildren<Camera>();
-        //blockText = gameObject.GetComponentInChildren<Text>();
         rPoints = new Vector2[rayAmount];
         GetPoints();        
     }

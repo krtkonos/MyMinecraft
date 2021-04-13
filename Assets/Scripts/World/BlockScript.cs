@@ -16,23 +16,24 @@ public class BlockScript : MonoBehaviour
 
     void Awake()
     {
+        // add for different types of blocks
         if (maxHealth == 10)
         {
-            SaveSystem.blocks.Add(this);
+            SaveSystem.blocks.Add(this); // grass
         }
         else if (maxHealth == 20)
         {
-            SaveSystem.dirtB.Add(this);
+            SaveSystem.dirtB.Add(this); // dirt
 
         }
-        else if (maxHealth == 30)
+        else if (maxHealth == 30) 
         {
-            SaveSystem.stoneB.Add(this);
+            SaveSystem.stoneB.Add(this); //stone
 
         }
         else if (maxHealth == 1000)
         {
-            SaveSystem.brB.Add(this);
+            SaveSystem.brB.Add(this); // bedrock
         }
         else { }                
     }
@@ -41,7 +42,6 @@ public class BlockScript : MonoBehaviour
     {
         inv = GameObject.FindGameObjectWithTag("InventoryManager").GetComponent<Inventory>();
         currentHealth = maxHealth;
-
     }
 
     // Update is called once per frame
@@ -49,17 +49,13 @@ public class BlockScript : MonoBehaviour
     {
         blockPos = transform.position;
     }
-    /*private void OnMouseDown()
-    {
-        Destroy(this.gameObject);
-    }*/
+   
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        //Debug.Log("Take damage");
+        
         if(currentHealth <= 0)
-        {
-            //Debug.Log("Damaged for real");
+        {            
             Destroyed();
         }
 
@@ -72,7 +68,7 @@ public class BlockScript : MonoBehaviour
     
     private void OnDestroy()
     {
-        //SaveSystem.blocks.Remove(this);
+        // remove for different types of blocks
         if (maxHealth == 10)
         {
             SaveSystem.blocks.Remove(this);

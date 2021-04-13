@@ -10,15 +10,9 @@ public class WorldGenerator : MonoBehaviour
     public GameObject player;
     public Transform playerPos;
     public GameObject collid;         
-    public int sizeX;
-    public int sizeZ;
-    public int maxY;
-
-    public int firstX = 32;
-    public int nextX = 0;
-    public int firstZ = 32;
-    public int nextZ = 0;    
-    public static string saveFile = "/johnsonworld4.json";    
+    public int sizeX; // horizontal length
+    public int sizeZ; // horizontal length 2
+    public int maxY; // height      
 
     public int groundHeight;
     public float terDetail;
@@ -35,30 +29,20 @@ public class WorldGenerator : MonoBehaviour
     private void Start()
     {
             seed = 100076;
-            Debug.Log(seed);
-        //JSON myObject = new JSON();
-       if (File.Exists(Application.dataPath + saveFile))
-        {            
-            //Load();
-        }
-        else
-        {
-            return;     
-        }
+            Debug.Log(seed);       
     }
     private void Update()
     {        
-        bdHP = 1000;
-        
+        bdHP = 1000;        
     }
     
 
 
-    public void GenerateTerrain()
+    public void GenerateTerrain() // generate terrain
     {
         Debug.Log("Terraingenerated");
-        //JSON save = new JSON();
-        for (int x = 0; x < sizeX; x++)
+ 
+        for (int x = 0; x < sizeX; x++) 
         {
             for(int z = 0; z < sizeZ; z++)
             {
@@ -68,8 +52,6 @@ public class WorldGenerator : MonoBehaviour
                 grass.transform.SetParent(GameObject.FindWithTag("Environment").transform);
                 var grassHP = grass.GetComponent<BlockScript>();
                 grassHP.maxHealth = 10;
-                //blockObj.Add(blocks[0]);
-                //save.blockVector.Add(grass.transform.position);
 
                 for (int y = 0; y < maxY; y++)
                 {
@@ -80,9 +62,6 @@ public class WorldGenerator : MonoBehaviour
                         dirt.transform.SetParent(GameObject.FindWithTag("Environment").transform);
                         var dirtHP = dirt.GetComponent<BlockScript>();
                         dirtHP.maxHealth = 20;
-                        //dirtObj.Add(blocks[2]);
-                        //save.blockVector.Add(dirt.transform.position);
-                        
                     }
                     else if (y < 1)
                     {
@@ -90,17 +69,13 @@ public class WorldGenerator : MonoBehaviour
                         bedrock.transform.SetParent(GameObject.FindWithTag("Environment").transform);
                         var bedrockHP = bedrock.GetComponent<BlockScript>();
                         bedrockHP.maxHealth = bdHP;
-                        //bedrockObj.Add(blocks[3]);
-                        //save.blockVector.Add(bedrock.transform.position);
                     }
                     else
                     {
                         GameObject stone = Instantiate(blocks[1], new Vector3(x, y, z), Quaternion.identity) as GameObject;
                         stone.transform.SetParent(GameObject.FindWithTag("Environment").transform);
                         var stoneHP = stone.GetComponent<BlockScript>();
-                        stoneHP.maxHealth = 30;
-                        //stoneObj.Add(blocks[1]);
-                        //save.blockVector.Add(stone.transform.position);
+                        stoneHP.maxHealth = 30;                        
                     }
                 }
                     
@@ -108,38 +83,20 @@ public class WorldGenerator : MonoBehaviour
                 if (x == (int)(sizeX / 2) && z == (int)(sizeZ / 2))
                 {
                     GameObject coll = Instantiate(collid, new Vector3(x, maxY, z), Quaternion.identity)as GameObject;
-                    coll.transform.SetParent(GameObject.FindWithTag("Environment").transform);
-                    //collObj.Add(collid);
-                    //save.blockVector.Add(collid.transform.position);
+                    coll.transform.SetParent(GameObject.FindWithTag("Environment").transform);               
                 }
-                /*if (x == (int)(sizeX / 2) && z == (int)(sizeZ / 2))
+                if (x == (int)(sizeX / 2) && z == (int)(sizeZ / 2))
                 {
                     Instantiate(player, new Vector3(x, maxY + 3, z), Quaternion.identity);
-                }*/
-                /*if (!File.Exists(Application.dataPath + "/wish.json"))
-                {*/
-                    if (x == (int)(sizeX / 2) && z == (int)(sizeZ / 2))
-                    {
-                        Instantiate(player, new Vector3(x, maxY + 3, z), Quaternion.identity);
-                    
-                    }
-                //}    
+
+                }
             }
         }
-        /*if (File.Exists(Application.dataPath + "/wish.json"))
-        {
-            Load();
-        }*/
-        //save.seed = seed;
-
-
     }
     public void GenerateNewTerrain(int posX, int posZ)
     {
         Debug.Log("new terrain generated");
-        /*GameObject coll = Instantiate(collid, new Vector3(posX - 16, maxY - 10,
-                    posZ - 16), Quaternion.identity);
-        coll.transform.SetParent(GameObject.FindWithTag("Enviro").transform);*/
+
         for (int x = posX-16; x < posX-16 + sizeX; x++)
         {
             for(int z = posZ-16; z < posZ-16 + sizeZ; z++)
@@ -148,10 +105,8 @@ public class WorldGenerator : MonoBehaviour
                 maxY += groundHeight;
                 GameObject grass = Instantiate(blocks[0], new Vector3(x, maxY, z), Quaternion.identity)as GameObject;
                 grass.transform.SetParent(GameObject.FindWithTag("Environment").transform);
-                //grass.transform.SetParent(GameObject.FindWithTag("Environment").transform);
                 var grassHP = grass.GetComponent<BlockScript>();
                 grassHP.maxHealth = 10;
-                //blockObj.Add(blocks[0]);
 
                 for (int y = 0; y < maxY; y++)
                 {
@@ -161,43 +116,24 @@ public class WorldGenerator : MonoBehaviour
                         GameObject dirt = Instantiate(blocks[2], new Vector3(x, y, z), Quaternion.identity) as GameObject;
                         dirt.transform.SetParent(GameObject.FindWithTag("Environment").transform);
                         var dirtHP = dirt.GetComponent<BlockScript>();
-                        dirtHP.maxHealth = 20;
-                        //dirtObj.Add(blocks[2]);
-                        //save.blockVector.Add(blocks[2].transform.position);
-                        
+                        dirtHP.maxHealth = 20;                        
                     }
                     else if (y < 1)
                     {
                         GameObject bedrock = Instantiate(blocks[3], new Vector3(x, y, z), Quaternion.identity) as GameObject;
                         bedrock.transform.SetParent(GameObject.FindWithTag("Environment").transform);
                         var bedrockHP = bedrock.GetComponent<BlockScript>();
-                        bedrockHP.maxHealth = bdHP;
-                        //bedrockObj.Add(blocks[3]);
-                        //save.blockVector.Add(blocks[3].transform.position);
+                        bedrockHP.maxHealth = bdHP;                        
                     }
                     else
                     {
                         GameObject stone = Instantiate(blocks[1], new Vector3(x, y, z), Quaternion.identity) as GameObject;
                         stone.transform.SetParent(GameObject.FindWithTag("Environment").transform);
                         var stoneHP = stone.GetComponent<BlockScript>();
-                        stoneHP.maxHealth = 30;
-                        //stoneObj.Add(stone);
-                        //save.blockVector.Add(stone.transform.position);
+                        stoneHP.maxHealth = 30;                        
                     }
-
-                }
-                /*if (x == (int)(sizeX / 2) && z == (int)(sizeZ / 2))
-                {
-                    GameObject coll = Instantiate(collid, new Vector3(transform.position.x, transform.position.y - 10,
-                    transform.position.z), Quaternion.identity);
-                    coll.transform.SetParent(GameObject.FindWithTag("Enviro").transform);
-                }*/
-            }
-            
-        }
-        
-    }
-    
-    
-
+                }                
+            }            
+        }        
+    }  
 }

@@ -6,65 +6,48 @@ using UnityEngine;
 
 public class MyController : MonoBehaviour
 {
+    public WorldGenerator wc;
+    public List<GameObject> newBlocks;
+    Inventory inv;
+    public Transform transPlaceBlock;
+    public GameObject world;
+    public GameObject collid;
+    Camera cam;
+    Vector3 moveDir = Vector3.zero;
+    public static Vector3 pos;
     public float moveSpeed = 6;
     public float jumpSpeed = 8;
     public float gravity = 20;
-    Vector3 moveDir = Vector3.zero;
-    public static Vector3 pos;
     float yRotation = 0;
     float yRot;
     float xRot;
     public float sensitivity = 4;
-    Camera cam;
     public LayerMask mask;
     float blockrayDistance = 5;
     int damagePower = 10;
     public bool canInteract;
-    public GameObject world;
-    public GameObject collid;
     int ax;
     int az;
-    public WorldGenerator wc;
-    Inventory inv;
-    public Transform transPlaceBlock;
-    public List<GameObject> newBlocks;
     
 
     void Start()
-    {
-        //Load();
-        transPlaceBlock.gameObject.SetActive(false);
-        canInteract = true;
+    {        
+        transPlaceBlock.gameObject.SetActive(false); //placeBlock non active til raycast hit
+        canInteract = true; //invenotry off
         cam = Camera.main;
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked; // no mouse
         inv = GameObject.FindGameObjectWithTag("InventoryManager").GetComponent<Inventory>();
         
     }
-    /*void Load()
-    {
-        BlockData data = SavingSystem.LoadPlayer();
-        Vector3 position;
-        position.x = data.playerPosition[0];
-        position.y = data.playerPosition[1];
-        position.z = data.playerPosition[2];
-        transform.position = position;
-    }*/
-
-    // Update is called once per frame
+    
     void Update()
     {
         if(transform.position.y < -10)
         {
             transform.position = new Vector3(0, 50, 0);
-        }
-        
+        }        
         pos = transform.position;
-        /*if (Input.GetKeyDown("p"))
-        {
-            Save();
-            Debug.Log("saved: " + pos);
-        }*/
-        //Debug.Log(pos);
+        
         CollidRay();
         ax = (int)transform.position.x;
         az = (int)transform.position.z;
@@ -76,7 +59,7 @@ public class MyController : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
 
             MouseLook();
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0)) // sestroy blocks
             {
                 Ray ray = new Ray(cam.transform.position, cam.transform.forward);
                 RaycastHit hit;
@@ -90,7 +73,7 @@ public class MyController : MonoBehaviour
                     }
                 }
             }
-            if (Input.GetMouseButtonDown(1))
+            if (Input.GetMouseButtonDown(1)) // place blocks
             {
                 if (inv.items[inv.hoverIndex].Placeable == true)
                 {
@@ -98,7 +81,7 @@ public class MyController : MonoBehaviour
                     RaycastHit hit;
                     //BlockScript block;
 
-                    if (Physics.Raycast(ray, out hit, blockrayDistance))
+                    if (Physics.Raycast(ray, out hit, blockrayDistance)) 
                     {
 
                         Vector3 spawnPos = Vector3.zero;
@@ -119,20 +102,17 @@ public class MyController : MonoBehaviour
                         {
                             spawnPos = hit.transform.position + (Vector3.forward * zDiff) * 2;
                         }
-
-                        //Instantiate(inv.items[inv.hoverIndex].Object, spawnPos, Quaternion.identity);
-                        inv.RemoveItem();
+                        
+                        inv.RemoveItem(); // remove from actionbar
                         GameObject bl = Instantiate(inv.items[inv.hoverIndex].Object, spawnPos, Quaternion.identity) as GameObject;
-                        bl.transform.SetParent(GameObject.FindWithTag("Enviro").transform);
-                        //SaveSystem.blocks.Add(inv.items[inv.hoverIndex].Object);
-                        //newBlocks.Add(inv.items[inv.hoverIndex].Object);
+                        bl.transform.SetParent(GameObject.FindWithTag("Enviro").transform);     //organize                   
                     }
                 }
             }
             PlaceCursorBlock();
 
         }
-        else
+        else // inventory opened
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
@@ -168,12 +148,9 @@ public class MyController : MonoBehaviour
                     spawnPos = hit.transform.position + (Vector3.forward * zDiff) * 2;
                 }
                 transPlaceBlock.gameObject.SetActive(true);
-                //transPlaceBlock.position = spawnPos;     
+                     
                 transPlaceBlock.transform.localRotation = Quaternion.identity;
                 transPlaceBlock.position = spawnPos;
-
-                //Debug.Log("Placeable");
-
             }
         }
     }
@@ -212,7 +189,7 @@ public class MyController : MonoBehaviour
             cam.transform.eulerAngles = new Vector3(yRotation, transform.eulerAngles.y, 0);
         }
     }
-    void CollidRay()
+    void CollidRay() // check if should generate new world part
     {
         Ray rayUp = new Ray(gameObject.transform.position, gameObject.transform.up);
         Ray rayDown = new Ray(gameObject.transform.position, -gameObject.transform.up);
@@ -236,38 +213,20 @@ public class MyController : MonoBehaviour
     public void Save()
     {
         JSON myObject = new JSON();
-        // myObject.level = score;
-        myObject.JSONpos = transform.position;
-        //myObject.newBlock = newBlocks;
-
+        
+        myObject.JSONpos = transform.position;        
 
         string json = JsonUtility.ToJson(myObject);
-
         File.WriteAllText(Application.dataPath + SaveSystem.PLAYER_SUB, json);
         Debug.Log(json + "saved");
     }
-    public void Load()
-    {
-        JSON myObject = new JSON();
-        string json = File.ReadAllText(Application.dataPath + SaveSystem.PLAYER_SUB);
-        JSON loaded = JsonUtility.FromJson<JSON>(json);
-        transform.position = loaded.JSONpos;
-
-        //score = loaded.level;
-        Debug.Log("Loaded");
-
-    }
-
-    private void OnApplicationQuit()
-    {
-        //Save();
-    }
+    
+    
     
     [Serializable]
     public class JSON
     {
         public Vector3 JSONpos;
-        //public List<GameObject> newBlock;
     }
     
 

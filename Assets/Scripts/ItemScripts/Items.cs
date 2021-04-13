@@ -66,7 +66,6 @@ public class Items : MonoBehaviour
         {
             Debug.LogError("Item Data does not have correct line ending");
         }
-
     }
     public Item GetItemByID(int id)
     {

@@ -58,7 +58,6 @@ public class Inventory : MonoBehaviour
             {
                 slots[i].GetComponent<Image>().color = slot.GetComponent<Image>().color;
             }
-
         }
     }
     public void RemoveItem() 

@@ -11,17 +11,15 @@ public class PlayerInputs : MonoBehaviour
     void Start()
     {
         inv = GameObject.FindGameObjectWithTag("InventoryManager").GetComponent<Inventory>();        
-        player = gameObject.GetComponent<MyController>();
-        
+        player = gameObject.GetComponent<MyController>();        
     }
 
     // Update is called once per frame
     void Update()
-    {
-        
+    {        
         CheckKeys();
     }
-    void CheckKeys()
+    void CheckKeys() // chose from hotbar
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {

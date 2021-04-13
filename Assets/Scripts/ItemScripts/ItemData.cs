@@ -17,10 +17,7 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
+ 
     public void OnBeginDrag(PointerEventData eventData)
     {
         if(item.ID != -1)
@@ -29,7 +26,6 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             gameObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
             this.transform.position = eventData.position;
         }
-
     }
     public void OnDrag(PointerEventData eventData)
     {
