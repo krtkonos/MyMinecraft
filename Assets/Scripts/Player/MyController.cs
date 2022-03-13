@@ -59,7 +59,7 @@ public class MyController : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
 
             MouseLook();
-            if (Input.GetMouseButtonDown(0)) // sestroy blocks
+            if (Input.GetMouseButtonDown(0)) // destroy blocks
             {
                 Ray ray = new Ray(cam.transform.position, cam.transform.forward);
                 RaycastHit hit;

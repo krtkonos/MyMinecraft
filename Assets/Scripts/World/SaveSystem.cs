@@ -36,12 +36,12 @@ public class SaveSystem : MonoBehaviour
 
     private void Awake()
     {
-        LoadBlock();
+        /*LoadBlock();
         LoadDirt();
         LoadStone();
         LoadBrb();
         LoadCollider();
-        Load();        
+        Load();  */      
     }
 
     /*private void OnApplicationQuit()
